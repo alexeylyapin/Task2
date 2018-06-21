@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * Created by Alexey Lyapin on 01.06.2018.
  */
-/*Class with logic of programm*/
+/*Class with logic of program*/
 
 public class Logic {
 
@@ -15,17 +15,23 @@ public class Logic {
 
         namesOfCities.add(null);
         Scanner scanner = new Scanner(System.in);
-        String string = new String();
+        String string;
         System.out.print("Input number of tests: ");
         string = scanner.nextLine();
         int numberOfTest = Integer.parseInt(string);
+        if(numberOfTest > 10){
+            System.out.println("Number of tests must be < 10");
+            System.out.print("Input number of tests: ");
+            string = scanner.nextLine();
+            numberOfTest = Integer.parseInt(string);
+        }
         for(int i = 0; i < numberOfTest; i++){
              System.out.print("Input number of cities: ");
             string = scanner.nextLine();
-            int numbrerOfCities = Integer.parseInt(string);
+            int numberOfCities = Integer.parseInt(string);
             Matrix matrixOfCost = new Matrix();
-            matrixOfCost.setSize(numbrerOfCities);
-            for(  i = 1; i <= numbrerOfCities; i++){
+            matrixOfCost.setSize(numberOfCities);
+            for(  i = 1; i <= numberOfCities; i++){
                  System.out.print("Input the name of city " + (i) + ": ");
                 string = scanner.nextLine();
                 namesOfCities.add(string);
@@ -48,9 +54,9 @@ public class Logic {
             for (int j = 0; j < numberOfPaths; j++){
                  System.out.print("Input name of path: (NAME NAME)");
                 string = scanner.nextLine();
-                String [] nameOfpath = string.split(" ");
-                String startCity = nameOfpath[0];
-                String finishCity = nameOfpath[1];
+                String [] nameOfPath = string.split(" ");
+                String startCity = nameOfPath[0];
+                String finishCity = nameOfPath[1];
                 int startIndex = 0;
                 int finishIndex = 0;
                 for( int k = 0; k < namesOfCities.size(); k++){
@@ -64,14 +70,17 @@ public class Logic {
                     }
                 }
                 int path = MinimalCostFinder(matrixOfCost.costArray, startIndex, finishIndex);
-                System.out.println("Minimal cost from city " + nameOfpath[0] + " to city " + nameOfpath[1] + " is: " +path);
+                System.out.println("Minimal cost from city " + nameOfPath[0] + " to city " + nameOfPath[1] + " is: " +path);
             }
         }
     }
-    // The method finds the minimum cost of a path using the Dijkstra's algorithm
-    public int  MinimalCostFinder(int [][]Array, int startIndex, int finishIndex) {
+    /*
+    The method finds the minimum cost of a path using the Dijkstra's algorithm
+     */
+    private int  MinimalCostFinder(int [][]Array, int startIndex, int finishIndex) {
 
 
+        //"INFINITY"
         final int INF = Integer.MAX_VALUE;
         int [] distance = new int [Array.length];
         boolean [] used = new boolean[Array.length];
